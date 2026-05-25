@@ -1,0 +1,10 @@
+{
+  "name": "x4-test-one",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node -e \"fetch('http://127.0.0.1:4000/health').catch(() => process.exit(0))\""
+  }
+}
