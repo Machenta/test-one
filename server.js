@@ -87,6 +87,7 @@ function html() {
       <section>
         <h1>${displayName}</h1>
         <p>${message}</p>
+        <p><small>X4 implementation workflow passed</small></p>
         <p><strong>${featureBadge}</strong></p>
         <p><strong>Peers:</strong> ${peerUrls.length ? peerUrls.join(", ") : "none"}</p>
         <button id="flow">Ask the other services</button>
