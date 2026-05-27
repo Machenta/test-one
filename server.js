@@ -21,7 +21,7 @@ const serviceId = process.env.SERVICE_ID || "x4-test-one";
 const displayName = process.env.SERVICE_NAME || "X4 Test One";
 const themeColor = process.env.THEME_COLOR || "#2563eb";
 const message = process.env.SERVICE_MESSAGE || "Hello from test one";
-const featureBadge = "Feature workspace: coordinator button enabled";
+const featureBadge = "Feature workspace: coordinator button enabled; X4 linked issue smoke marker for test-one #10";
 const peerUrls = (process.env.PEER_URLS || "")
   .split(",")
   .map((value) => value.trim())
