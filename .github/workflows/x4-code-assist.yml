@@ -1,0 +1,47 @@
+name: X4 Code Assist
+
+on:
+  issues:
+    types: [opened, labeled]
+  issue_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  pull_request_review_comment:
+    types: [created]
+  check_suite:
+    types: [completed]
+  pull_request:
+    types: [closed]
+  workflow_run:
+    types: [completed]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+  checks: read
+  actions: read
+
+concurrency:
+  group: x4-code-assist-${{ github.event.repository.full_name }}-${{ github.event.issue.number || github.event.pull_request.number || github.event.workflow_run.id || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    name: Dispatch event to X4 Code Assist
+    runs-on: [self-hosted, x4-control, code-assist]
+    timeout-minutes: 360
+    steps:
+      - name: Dispatch GitHub event
+        shell: bash
+        env:
+          CODE_ASSIST_APP_DIR: /srv/x4/mastra-orchestrator/app
+          X4_DELIVERY_ID: ${{ github.event_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          cd "$CODE_ASSIST_APP_DIR"
+          npm run process:github-event -- \
+            --event-name "$GITHUB_EVENT_NAME" \
+            --payload-file "$GITHUB_EVENT_PATH" \
+            --delivery-id "$X4_DELIVERY_ID"
