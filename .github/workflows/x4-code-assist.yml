@@ -37,6 +37,7 @@ jobs:
         shell: bash
         env:
           CODE_ASSIST_APP_DIR: /srv/x4/mastra-orchestrator/app
+          CODE_ASSIST_APP_ROOT: /srv/x4/mastra-orchestrator/app
           DOTENV_CONFIG_PATH: /etc/x4/env/mastra-orchestrator.env
           X4_DELIVERY_ID: ${{ github.event_name }}-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
