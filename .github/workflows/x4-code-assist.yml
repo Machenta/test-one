@@ -1,6 +1,7 @@
 name: X4 Code Assist
 
-on:
+"on":
+  workflow_dispatch:
   issues:
     types: [opened, labeled]
   issue_comment:
@@ -13,8 +14,6 @@ on:
     types: [completed]
   pull_request:
     types: [closed]
-  workflow_run:
-    types: [completed]
 
 permissions:
   contents: read
@@ -24,12 +23,13 @@ permissions:
   actions: read
 
 concurrency:
-  group: x4-code-assist-${{ github.event.repository.full_name }}-${{ github.event.issue.number || github.event.pull_request.number || github.event.workflow_run.id || github.run_id }}
+  group: x4-code-assist-${{ github.repository }}-${{ github.event.issue.number || github.event.pull_request.number || github.run_id }}
   cancel-in-progress: false
 
 jobs:
   dispatch:
     name: Dispatch event to X4 Code Assist
+    if: github.actor != 'x4-poc-bucolix[bot]'
     runs-on: [self-hosted, x4-control, code-assist]
     timeout-minutes: 360
     steps:
